@@ -4,11 +4,16 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Repository\ProfessorRepository;
+
 class ProfessorController extends AbstractController
 {
     public function listar() : void
     {
-        $this->renderizar('professor/listar');
+        $rep = new ProfessorRepository;
+        $this->renderizar('professor/listar', [
+            'professores' => $rep->buscarTodos()
+        ]);
     }
 
     public function novo() : void
@@ -23,6 +28,11 @@ class ProfessorController extends AbstractController
 
     public function excluir() : void
     {
+        $id = $_GET['id'];
+        $rep = new ProfessorRepository();
+        $rep->excluir($id);
+
         $this->renderizar('professor/excluir');
-    } 
-}
+        $this->redirecionar('professores/listar');
+    }
+} 

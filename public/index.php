@@ -5,10 +5,6 @@ use App\Connection\DatabaseConnection;
 include '../vendor/autoload.php';
 include '../config/database.php';
 
-var_dump(
-    DatabaseConnection::abrirConexao()
-);
-
 $rotas = require '../config/rotas.php';
 
 $url = $_SERVER["REQUEST_URI"];
