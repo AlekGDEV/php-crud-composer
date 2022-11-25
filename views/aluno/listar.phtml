@@ -25,6 +25,8 @@
             <?php
                 foreach($alunos ?? [] as $cadaAluno)
                 {
+                    $inverterData = array_reverse(explode('-',$cadaAluno->dataNascimento));
+                    $dataNascimento = implode('/',$inverterData);
                     echo "
                         <tr>
                             <td class='fw-bold'>{$cadaAluno->id}</td>
@@ -34,10 +36,10 @@
                             <td>{$cadaAluno->email}</td>
                             <td>{$cadaAluno->status}</td>
                             <td>{$cadaAluno->genero}</td>
-                            <td>{$cadaAluno->dataNascimento}</td>
+                            <td>{$dataNascimento}</td>
                             <td>
-                                <button class='btn btn-warning'>Editar</button>
-                                <button class='btn btn-danger'>Excluir</button>
+                                <a href='/alunos/editar?id={$cadaAluno->id}' class='btn btn-warning'>Editar</a>
+                                <a href='/alunos/excluir?id={$cadaAluno->id}' class='btn btn-danger'>Excluir</a>
                             </td>
                         </tr>
                     ";
