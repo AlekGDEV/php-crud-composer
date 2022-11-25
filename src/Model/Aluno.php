@@ -15,5 +15,4 @@ class Aluno extends Pessoa
     public bool $status;
     public string $genero;
     public string $dataNascimento;
-    public string $cpf;
 }

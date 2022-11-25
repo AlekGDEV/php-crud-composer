@@ -21,8 +21,7 @@
         </thead>
         <tbody>
             <?php
-                if(isset($professores) && sizeOf($professores) > 0){
-                foreach($professores as $cadaProfessor)
+                foreach($professores ?? [] as $cadaProfessor)
                 {
                     echo "
                         <tr>
@@ -39,8 +38,7 @@
                             </td>
                         </tr>
                         ";
-                    }
-                }   
+                    } 
             ?>
         </tbody>
     </table>

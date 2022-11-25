@@ -8,8 +8,8 @@ CREATE TABLE tb_alunos (
     matricula VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     status TINYINT NOT NULL,
-    genero VARCHAR(20) NOT NULL,
-    dataNascimento DATETIME NOT NULL,
+    genero VARCHAR(100) NOT NULL,
+    dataNascimento DATE NOT NULL,
     cpf CHAR(11) UNIQUE NOT NULL
 );
 

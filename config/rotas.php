@@ -16,10 +16,12 @@ function criarRota(string $controllerNome, string $methodNome) : array
 
 $rotas = [
     '/' => criarRota(SiteController::class, 'inicio'),
+    
     '/alunos/listar' => criarRota(AlunoController::class, 'listar'),
     '/alunos/novo' => criarRota(AlunoController::class, 'novo'),
     '/alunos/editar' => criarRota(AlunoController::class, 'editar'),
     '/alunos/excluir' => criarRota(AlunoController::class, 'excluir'),
+    '/alunos/relatorio' => criarRota(AlunoController::class, 'relatorio'),
     
     '/cursos/listar' => criarRota(CursoController::class, 'listar'),
     '/cursos/novo' => criarRota(CursoController::class, 'novo'),

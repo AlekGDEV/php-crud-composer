@@ -12,14 +12,18 @@ class AlunoRepository implements RepositoryInterface
 {
 
     public const TABLE = 'tb_alunos';
+    public PDO $conexao;
+
+    public function __construct()
+    {
+        $this->conexao = DatabaseConnection::abrirConexao();
+    }
 
     public function buscarTodos(): iterable
     {
-        $conexao = DatabaseConnection::abrirConexao();
-
         $sql = 'SELECT * FROM ' . self::TABLE;
 
-        $query = $conexao->query($sql);
+        $query = $this->conexao->query($sql);
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_CLASS, Aluno::class);
@@ -32,6 +36,13 @@ class AlunoRepository implements RepositoryInterface
 
     public function inserir(object $dados): object
     {
+        $matricula = date('Ymd') . substr($dados->cpf, -2);
+        $sql = "INSERT INTO " . self::TABLE . 
+        "(nome, cpf, matricula, email, status, genero, dataNascimento) " . 
+        "VALUES ('{$dados->nome}', '{$dados->cpf}', '{$matricula}', '{$dados->email}', '1', '{$dados->genero}', '{$dados->dataNascimento}');";
+
+        $this->conexao->query($sql);
+
         return $dados;
     }
 
