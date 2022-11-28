@@ -10,5 +10,5 @@ class Curso
     public int $cargaHoraria;
     public string $descricao;
     public bool $status;
-    public array $ementa;
+    public int $categoria;
 }

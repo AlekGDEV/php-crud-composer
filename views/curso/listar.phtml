@@ -1,5 +1,5 @@
 <section class="card card-body container-fluid">
-    <h1 class="text-center">Listar alunos:</h1>
+    <h1 class="text-center">Listar cursos:</h1>
     <hr>
     <div class="mt-2 w-100 d-flex justify-content-end ">
         <a href="/alunos/novo" class="btn btn-outline-primary me-1">Adicionar aluno</a>
@@ -16,13 +16,36 @@
                     <tr>
                         <th>#ID</th>
                         <th>Nome</th>
-                        <th>Modalidade de ensino</th>
-                        <th>Formação</th>
+                        <th>Carga Horaria</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    <?php
+                    foreach ($cursos ?? [] as $cadaCurso) {
+                        $estaAtivo = 'Não ativo';
+                        if ($cadaCurso->status == 1) {
+                            $estaMatriculado = 'Ativo';
+                        }
+                        echo "
+                        <tr>
+                            <td class='fw-bold'>{$cadaCurso->id}</td>
+                            <td>{$cadaCurso->nome}</td>
+                            <td>{$cadaCurso->cargaHoraria}</td>
+                            <td>{$cadaCurso->descricao}</td>
+                            <td>{$estaAtivo}</td>
+                            <td>{$cadaCurso->categoria_id}</td>
+                            <td>
+                                <a href='/alunos/editar?id={$cadaCurso->id}' class='btn btn-warning'>Editar</a>
+                                <a href='/alunos/excluir?id={$cadaCurso->id}' class='btn btn-danger'>Excluir</a>
+                            </td>
+                        </tr>
+                    ";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>

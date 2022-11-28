@@ -4,11 +4,20 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Repository\CursoRepository;
+
 class CursoController extends AbstractController
 {
+    private CursoRepository $repository;
+    public function __construct()
+    {
+        $this->repository = new CursoRepository;
+    }
     public function listar() : void
     {
-        $this->renderizar('curso/listar');
+        $this->renderizar('curso/listar', [
+            'cursos' => $this->repository->buscarTodos()
+        ]);
     }
 
     public function novo() : void

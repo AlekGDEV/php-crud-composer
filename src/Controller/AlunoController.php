@@ -11,11 +11,16 @@ use Exception;
 
 class AlunoController extends AbstractController
 {
+    private AlunoRepository $repository;
+    public function __construct()
+    {
+        $this->repository = new AlunoRepository;
+    }
+
     public function listar() : void
     {
-        $rep = new AlunoRepository;
         $this->renderizar('aluno/listar', [
-            'alunos' => $rep->buscarTodos()
+            'alunos' => $this->repository->buscarTodos()
         ]);
     }
 
@@ -33,10 +38,8 @@ class AlunoController extends AbstractController
         $aluno->genero = $_POST['genero'];
         $aluno->dataNascimento = $_POST['dataNascimento'];
         
-        $rep = new AlunoRepository();
-
         try{
-            $rep->inserir($aluno);
+            $this->repository->inserir($aluno);
         } catch(Exception $exception){
             if(str_contains($exception->getMessage(), 'cpf')){
                 die('CPF já existe');
@@ -53,8 +56,7 @@ class AlunoController extends AbstractController
     public function editar() : void
     {
         $id = $_GET['id'];
-        $rep = new AlunoRepository();
-        $aluno = $rep->buscarUm($id);
+        $aluno = $this->repository->buscarUm($id);
         $this->renderizar('aluno/editar', [$aluno]);
         if(!empty($_POST)){
             $aluno->nome = $_POST['nome'];
@@ -63,7 +65,7 @@ class AlunoController extends AbstractController
             $aluno->genero = $_POST['genero'];
             $aluno->dataNascimento = $_POST['dataNascimento'];
             try{
-                $rep->atualizar($aluno, $id);
+                $this->repository->atualizar($aluno, $id);
             } catch(Exception $exception){
                 if(str_contains($exception->getMessage(), 'cpf')){
                     die('CPF já existe');
@@ -81,26 +83,33 @@ class AlunoController extends AbstractController
     public function excluir() : void
     {
         $id = $_GET['id'];
-        $rep = new AlunoRepository();
-        $rep->excluir($id);
+        $this->repository->excluir($id);
         
         $this->redirecionar('alunos/listar');
     }
     
     public function relatorio() : void
     {
+        date_default_timezone_set('America/Sao_Paulo');
         $hoje = date('d/m/Y, H:i:s');
+        $alunos = $this->repository->buscarTodos();
         $design = "
             <h1>Relatorio de alunos</h1>
             <hr>
             <em>Gerado em {$hoje}</em>
-        ";
+
+            <table border='1'>
+                <thead>
+                    <th>ID</th>
+                    <th>Nome</th>
+                </thead>
+                <tbody>"; 
 
         $dompdf = new Dompdf();
 
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->loadHtml($design);
         $dompdf->render();
-        $dompdf->stream();
+        $dompdf->stream('relatorio');
     }
 }
