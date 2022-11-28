@@ -15,8 +15,8 @@
                 <label for="email">E-mail:</label>
                 <input name="email" type="text" id="email" class="form-control mb-3" value="<?php echo $aluno->email; ?>">
                 <label for="genero">Genero: </label>
-                <select name="genero" id="genero" class="form-select mb-3">
-                    <option disabled selected><?php echo $aluno->genero; ?></option>
+                <select name="genero" id="genero" class="form-select mb-3" required>
+                    <option disabled><?php echo $aluno->genero; ?></option>
                     <option>Masculino</option>
                     <option>Feminino</option>
                     <option>Prefiro não responder</option>

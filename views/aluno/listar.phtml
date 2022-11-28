@@ -27,6 +27,11 @@
                 {
                     $inverterData = array_reverse(explode('-',$cadaAluno->dataNascimento));
                     $dataNascimento = implode('/',$inverterData);
+                    $estaMatriculado = 'Não matriculado';
+
+                    if($cadaAluno->status == 1){
+                        $estaMatriculado = 'Matriculado';
+                    }
                     echo "
                         <tr>
                             <td class='fw-bold'>{$cadaAluno->id}</td>
@@ -34,7 +39,7 @@
                             <td>{$cadaAluno->cpf}</td>
                             <td>{$cadaAluno->matricula}</td>
                             <td>{$cadaAluno->email}</td>
-                            <td>{$cadaAluno->status}</td>
+                            <td>{$estaMatriculado}</td>
                             <td>{$cadaAluno->genero}</td>
                             <td>{$dataNascimento}</td>
                             <td>
@@ -47,4 +52,4 @@
             ?>
         </tbody>
     </table>
-</section>
+</section>  

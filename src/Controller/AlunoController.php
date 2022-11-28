@@ -25,6 +25,7 @@ class AlunoController extends AbstractController
             $this->renderizar('aluno/novo');
             return;
         }
+
         $aluno = new Aluno();
         $aluno->nome = $_POST['nome'];
         $aluno->cpf = $_POST['cpf'];
@@ -33,6 +34,7 @@ class AlunoController extends AbstractController
         $aluno->dataNascimento = $_POST['dataNascimento'];
         
         $rep = new AlunoRepository();
+
         try{
             $rep->inserir($aluno);
         } catch(Exception $exception){
@@ -45,40 +47,35 @@ class AlunoController extends AbstractController
 
             die('Vish, aconteceu um erro');
         }
-             
-        $this->redirecionar('alunos/listar');
+        $this->redirecionar('alunos/listar');      
     }
 
     public function editar() : void
     {
-        if(empty($_POST)){
-            $id = $_GET['id'];
-            $rep = new AlunoRepository();
-            $aluno = $rep->buscarUm($id);
-            $this->renderizar('aluno/editar', [$aluno]);
-        }
-
-        $aluno->nome = $_POST['nome'];
-        $aluno->cpf = $_POST['cpf'];
-        $aluno->email = $_POST['email'];
-        $aluno->genero = $_POST['genero'];
-        $aluno->dataNascimento = $_POST['dataNascimento'];
-
+        $id = $_GET['id'];
         $rep = new AlunoRepository();
-        try{
-            $rep->atualizar($aluno, $id);
-        } catch(Exception $exception){
-            if(str_contains($exception->getMessage(), 'cpf')){
-                die('CPF já existe');
+        $aluno = $rep->buscarUm($id);
+        $this->renderizar('aluno/editar', [$aluno]);
+        if(!empty($_POST)){
+            $aluno->nome = $_POST['nome'];
+            $aluno->cpf = $_POST['cpf'];
+            $aluno->email = $_POST['email'];
+            $aluno->genero = $_POST['genero'];
+            $aluno->dataNascimento = $_POST['dataNascimento'];
+            try{
+                $rep->atualizar($aluno, $id);
+            } catch(Exception $exception){
+                if(str_contains($exception->getMessage(), 'cpf')){
+                    die('CPF já existe');
+                }
+                if(str_contains($exception->getMessage(), 'email')){
+                    die('Email já existe');
+                }
+    
+                die('Vish, aconteceu um erro');
             }
-            if(str_contains($exception->getMessage(), 'email')){
-                die('Email já existe');
-            }
-
-            die('Vish, aconteceu um erro');
+            $this->redirecionar('alunos/listar');
         }
-
-        $this->redirecionar('alunos/listar');
     }
 
     public function excluir() : void

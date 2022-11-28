@@ -52,7 +52,12 @@ class AlunoRepository implements RepositoryInterface
 
     public function atualizar(object $novosDados, string $id): object
     {
-        $sql = "UPDATE " . self::TABLE . " SET nome='{$novosDados->nome}', cpf='{$novosDados->cpf}', email='{$novosDados->email}', genero='{$novosDados->genero}', dataNascimento='{$novosDados->dataNascimento}'";
+        $sql = "UPDATE " . self::TABLE . 
+        " SET nome='{$novosDados->nome}', cpf='{$novosDados->cpf}', email='{$novosDados->email}', genero='{$novosDados->genero}', dataNascimento='{$novosDados->dataNascimento}'
+        WHERE id = '{$id}';
+        ";
+
+        $this->conexao->query($sql);
 
         return $novosDados;
     }
