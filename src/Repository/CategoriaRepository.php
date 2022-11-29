@@ -38,7 +38,7 @@ class CategoriaRepository implements RepositoryInterface
 
     public function inserir(object $dados): object
     {
-        $sql = "INSERT INTO " . self::TABLE . "(nome, email, senha, perfil) VALUES ('{$dados->nome}', '{$dados->email}', '{$dados->senha}', '{$dados->perfil}')";
+        $sql = "INSERT INTO " . self::TABLE . "(nome) VALUES ('{$dados->nome}')";
         $this->conexao->query($sql);
         return $dados;
     }
