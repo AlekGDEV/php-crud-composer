@@ -129,9 +129,10 @@ class CursoController extends AbstractController
                         <th>Categoria</th>
                     </tr>
                 </thead>
-                <tbody>" . 
+                <tbody>" 
+                . 
                     $corpotabela 
-                    . 
+                . 
                 "</tbody>
             </table>
         ";

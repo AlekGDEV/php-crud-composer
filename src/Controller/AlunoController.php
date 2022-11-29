@@ -97,23 +97,55 @@ class AlunoController extends AbstractController
         date_default_timezone_set('America/Sao_Paulo');
         $hoje = date('d/m/Y, H:i:s');
         $alunos = $this->repository->buscarTodos();
+        $corpoTabela = '';
+        $estaMatriculado = 'Não matriculado';
+        
+        foreach($alunos as $cadaAluno){
+            $inverterData = array_reverse(explode('-',$cadaAluno->dataNascimento));
+            $dataNascimento = implode('/',$inverterData);
+            if($cadaAluno->status == 1){
+                $estaMatriculado = 'Matriculado';
+            }
+            $corpoTabela .= "
+                <tr>
+                    <td>{$cadaAluno->id}</td>
+                    <td>{$cadaAluno->nome}</td>
+                    <td>{$cadaAluno->cpf}</td>
+                    <td>{$cadaAluno->matricula}</td>
+                    <td>{$cadaAluno->email}</td>
+                    <td>{$estaMatriculado}</td>
+                    <td>{$cadaAluno->genero}</td>
+                    <td>{$dataNascimento}</td>
+                </tr>
+            ";
+        }
         $design = "
-            <h1>Relatorio de alunos</h1>
-            <hr>
+            <h1>Relatorio de Alunos</h1>
             <em>Gerado em {$hoje}</em>
-
-            <table border='1'>
+            <hr>
+            <table border='1' width='100%' style='margin-top: 30px; text-align:center;'>
                 <thead>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Matricula</th>
+                    <th>E-mail</th>
+                    <th>Status</th>
+                    <th>Gênero</th>
+                    <th>Data de nascimento</th>
                 </thead>
-                <tbody>"; 
+                <tbody>" 
+                .
+                $corpoTabela 
+                .
+                "</tbody>
+            </table>"; 
 
         $dompdf = new Dompdf();
 
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->loadHtml($design);
         $dompdf->render();
-        $dompdf->stream('relatorio');
+        $dompdf->stream('relatorio-de-alunos.pdf', ['Attachment' => 0]);
     }
 }
