@@ -5,26 +5,26 @@ declare(strict_types = 1);
 namespace App\Repository;
 
 use App\Connection\DatabaseConnection;
-use App\Model\Curso;
+use App\Model\Categoria;
 use PDO;
 
-class CursoRepository implements RepositoryInterface
+class CategoriaRepository implements RepositoryInterface
 {
-    public const TABLE = 'tb_cursos';
-    public PDO $conexao;
+    public const TABLE = 'tb_categorias';
+
+    private PDO $conexao;
 
     public function __construct()
     {
         $this->conexao = DatabaseConnection::abrirConexao();
     }
 
-    public function buscarTodos(): iterable
+    public function buscarTodos() : iterable
     {
-        $sql = "SELECT * FROM " . self::TABLE . " INNER JOIN tb_categorias ON tb_cursos.categoria_id = tb_categorias.id ORDER BY tb_cursos.id";
-
+        $sql = "SELECT * FROM " . self::TABLE;
         $query = $this->conexao->query($sql);
         $query->execute();
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_CLASS, Categoria::class);
     }
 
     public function buscarUm(string $id): object
@@ -33,24 +33,20 @@ class CursoRepository implements RepositoryInterface
         $query = $this->conexao->query($sql);
         $query->execute();
 
-        return $query->fetchObject(Curso::class);       
+        return $query->fetchObject(Aluno::class);       
     }
 
     public function inserir(object $dados): object
     {
-        $sql = "INSERT INTO " . self::TABLE . 
-        "(nome, cargaHoraria, descricao, status, categoria_id) " . 
-        "VALUES ('{$dados->nome}', '{$dados->cargaHoraria}', '{$dados->descricao}', true ,'{$dados->categoria_id}');";
-
+        $sql = "INSERT INTO " . self::TABLE . "(nome, email, senha, perfil) VALUES ('{$dados->nome}', '{$dados->email}', '{$dados->senha}', '{$dados->perfil}')";
         $this->conexao->query($sql);
-
         return $dados;
     }
 
     public function atualizar(object $novosDados, string $id): object
     {
         $sql = "UPDATE " . self::TABLE . 
-        " SET nome='{$novosDados->nome}', cargaHoraria='{$novosDados->cargaHoraria}', descricao='{$novosDados->descricao}', dataNascimento='{$novosDados->categoria_id}'
+        " SET nome='{$novosDados->nome}', cpf='{$novosDados->cpf}', email='{$novosDados->email}', genero='{$novosDados->genero}', dataNascimento='{$novosDados->dataNascimento}'
         WHERE id = '{$id}';
         ";
 

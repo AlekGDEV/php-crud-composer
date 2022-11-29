@@ -2,8 +2,8 @@
     <h1 class="text-center">Listar cursos:</h1>
     <hr>
     <div class="mt-2 w-100 d-flex justify-content-end ">
-        <a href="/alunos/novo" class="btn btn-outline-primary me-1">Adicionar aluno</a>
-        <a href="/alunos/relatorio" class="btn btn-outline-primary">Gerar PDF</a>
+        <a href="/cursos/novo" class="btn btn-outline-primary me-1">Adicionar curso</a>
+        <a href="/cursos/relatorio" target="_blank" class="btn btn-outline-primary">Gerar PDF</a>
     </div>
     <div class="row">
         <div class="col-4">
@@ -11,7 +11,7 @@
         </div>
         <div class="col-8">
             <table class="table table-striped table-hover table-bordered align-middle text-center mt-4">
-                <caption>Tabela de alunos</caption>
+                <caption>Tabela de cursos</caption>
                 <thead class="table-dark">
                     <tr>
                         <th>#ID</th>
@@ -25,22 +25,23 @@
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($cursos ?? [] as $cadaCurso) {
+                    foreach ($cursos ?? [] as $cadaCurso) 
+                    {
                         $estaAtivo = 'Não ativo';
-                        if ($cadaCurso->status == 1) {
-                            $estaMatriculado = 'Ativo';
+                        if ($cadaCurso[4] == 1) {
+                            $estaAtivo = 'Ativo';
                         }
                         echo "
                         <tr>
-                            <td class='fw-bold'>{$cadaCurso->id}</td>
-                            <td>{$cadaCurso->nome}</td>
-                            <td>{$cadaCurso->cargaHoraria}</td>
-                            <td>{$cadaCurso->descricao}</td>
+                            <td class='fw-bold'>{$cadaCurso[0]}</td>
+                            <td>{$cadaCurso[1]}</td>
+                            <td>{$cadaCurso[2]}</td>
+                            <td>{$cadaCurso[3]}</td>
                             <td>{$estaAtivo}</td>
-                            <td>{$cadaCurso->categoria_id}</td>
+                            <td>{$cadaCurso['nome']}</td>
                             <td>
-                                <a href='/alunos/editar?id={$cadaCurso->id}' class='btn btn-warning'>Editar</a>
-                                <a href='/alunos/excluir?id={$cadaCurso->id}' class='btn btn-danger'>Excluir</a>
+                                <a href='/cursos/editar?id={$cadaCurso[0]}' class='btn btn-warning'>Editar</a>
+                                <a href='/cursos/excluir?id={$cadaCurso[0]}' class='btn btn-danger'>Excluir</a>
                             </td>
                         </tr>
                     ";

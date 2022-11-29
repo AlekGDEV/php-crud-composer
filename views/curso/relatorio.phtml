@@ -1,0 +1,44 @@
+<?php 
+    $hoje = $dados[0];
+    echo "
+    <div>
+        <h1>Relatorio dos cursos</h1>
+        <strong>$hoje</strong>
+    </div>
+    <table>
+        <thead>
+            <th>
+                <td>Id</td>
+                <td>Nome</td>
+                <td>Carga Horaria</td>
+                <td>Descrição</td>
+                <td>Status</td>
+                <td>Categoria</td>
+            </th>
+        </thead>
+        <tbody>
+    "; 
+    foreach($cursos as $cadaCurso)
+    {
+        $estaAtivo = 'Não ativo';
+        if($cadaCurso[4] == 1){
+        $estaAtivo = 'Ativo';
+        }
+        echo "
+            <tr>
+                <td></td>
+                <td>{$cadaCurso[0]}</td>
+                <td>{$cadaCurso[1]}</td>
+                <td>{$cadaCurso[2]}</td>
+                <td>{$cadaCurso[3]}</td>
+                <td>{$estaAtivo}</td>
+                <td>{$cadaCurso[5]}</td>
+            </tr>
+        ";
+    }  
+    echo "
+        </tbody>
+    </table>
+    "
+
+?>
