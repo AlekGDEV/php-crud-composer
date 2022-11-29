@@ -17,15 +17,17 @@
                 <label for="categoria">Categoria: </label>
                 <select name="categoria" id="categoria" class="form-select mb-3">
                     <?php
-                    $categoriaExistente;
-                    if($curso->categoria_id == $categorias['id'][0]){
-                        $categoriaExistente = $categorias['nome'][0];
-                    }
-                    echo "<option disabled selected>{$categoriaExistente}</option>";
                     foreach($categorias as $cadaCategoria){
-                        echo "
-                        <option value='{$cadaCategoria->id}'>{$cadaCategoria->nome}</option>
-                        ";
+                        if($curso->categoria_id == $cadaCategoria->id){
+                            echo "
+                            <option value='{$cadaCategoria->id}' selected>{$cadaCategoria->nome}</option>
+                            ";
+                        }
+                        else{
+                            echo "
+                            <option value='{$cadaCategoria->id}'>{$cadaCategoria->nome}</option>
+                            ";
+                        }
                     }
                     ?>
                 </select>

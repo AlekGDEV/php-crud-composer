@@ -5,6 +5,8 @@ use App\Connection\DatabaseConnection;
 include dirname(__DIR__) . '../vendor/autoload.php';
 include dirname(__DIR__) . '../config/database.php';
 
+session_start();
+
 $rotas = require dirname(__DIR__) . '../config/rotas.php';
 
 $url = $_SERVER["REQUEST_URI"];

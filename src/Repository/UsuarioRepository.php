@@ -19,6 +19,14 @@ class UsuarioRepository
         $this->conexao = DatabaseConnection::abrirConexao();
     }
 
+    public function buscarUmPeloEmail(string $email) : Usuario | bool
+    {
+        $sql = "SELECT * FROM " . self::TABLE . " WHERE email='{$email}'";
+
+        $query = $this->conexao->query($sql);
+        $query->execute();
+        return $query->fetchObject(Usuario::class);
+    }
     public function buscarTodos() : iterable
     {
         $sql = "SELECT * FROM " . self::TABLE;

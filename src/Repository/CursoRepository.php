@@ -50,7 +50,7 @@ class CursoRepository implements RepositoryInterface
     public function atualizar(object $novosDados, string $id): object
     {
         $sql = "UPDATE " . self::TABLE . 
-        " SET nome='{$novosDados->nome}', cargaHoraria='{$novosDados->cargaHoraria}', descricao='{$novosDados->descricao}', dataNascimento='{$novosDados->categoria_id}'
+        " SET nome='{$novosDados->nome}', cargaHoraria='{$novosDados->cargaHoraria}', descricao='{$novosDados->descricao}', categoria_id='{$novosDados->categoria_id}'
         WHERE id = '{$id}';
         ";
 

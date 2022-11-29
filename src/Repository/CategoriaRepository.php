@@ -27,13 +27,13 @@ class CategoriaRepository implements RepositoryInterface
         return $query->fetchAll(PDO::FETCH_CLASS, Categoria::class);
     }
 
-    public function buscarUm(string $id): object
+    public function buscarUm(string $id) : object
     {
         $sql = "SELECT * FROM " . self::TABLE . " WHERE id=" . $id;
         $query = $this->conexao->query($sql);
         $query->execute();
-
-        return $query->fetchObject(Aluno::class);       
+    
+        return $query->fetchObject(Categoria::class);       
     }
 
     public function inserir(object $dados): object
@@ -46,8 +46,7 @@ class CategoriaRepository implements RepositoryInterface
     public function atualizar(object $novosDados, string $id): object
     {
         $sql = "UPDATE " . self::TABLE . 
-        " SET nome='{$novosDados->nome}', cpf='{$novosDados->cpf}', email='{$novosDados->email}', genero='{$novosDados->genero}', dataNascimento='{$novosDados->dataNascimento}'
-        WHERE id = '{$id}';
+        " SET nome='{$novosDados->nome}' WHERE id = '{$id}';
         ";
 
         $this->conexao->query($sql);

@@ -39,7 +39,6 @@ class CategoriaController extends AbstractController
             if(str_contains($exception->getMessage(), 'nome')){
                 die('O categoria já existe');
             }
-
             die('Vish, aconteceu um erro');
         }
         $this->redirecionar('categorias/listar');      
@@ -52,9 +51,6 @@ class CategoriaController extends AbstractController
         $this->renderizar('categoria/editar', [$categoria]);
         if(!empty($_POST)){
             $categoria->nome = $_POST['nome'];
-            $categoria->cargaHoraria = $_POST['cargaHoraria'];
-            $categoria->descricao = $_POST['descricao'];
-            $categoria->categoria_id = $_POST['categoria'];
             try{
                 $this->repository->atualizar($categoria, $id);
             } catch(Exception $exception){
