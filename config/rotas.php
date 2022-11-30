@@ -2,6 +2,8 @@
 
 
 use App\Controller\AlunoController;
+use App\Controller\Api\AlunoApiController;
+use App\Controller\Api\UsuarioApiController;
 use App\Controller\AuthController;
 use App\Controller\CategoriaController;
 use App\Controller\CursoController;
@@ -19,7 +21,7 @@ function criarRota(string $controllerNome, string $methodNome) : array
 
 $rotas = [
     '/' => criarRota(SiteController::class, 'inicio'),
-    
+        
     '/alunos/listar' => criarRota(AlunoController::class, 'listar'),
     '/alunos/novo' => criarRota(AlunoController::class, 'novo'),
     '/alunos/editar' => criarRota(AlunoController::class, 'editar'),
@@ -47,6 +49,14 @@ $rotas = [
 
     '/login' => criarRota(AuthController::class, 'login'),
     '/desconectar' => criarRota(AuthController::class, 'logout'),
+
+    /* ---------- Rotas da API ---------- */
+
+    '/api/alunos' => criarRota(AlunoApiController::class, 'capturarTodosAlunos'),
+    '/api/usuarios' => criarRota(UsuarioApiController::class, 'capturarTodosUsuarios')
+
+
+    /* ---------------------------------- */
 ];
 
 return $rotas;

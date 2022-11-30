@@ -27,9 +27,10 @@ class UsuarioRepository
         $query->execute();
         return $query->fetchObject(Usuario::class);
     }
+    
     public function buscarTodos() : iterable
     {
-        $sql = "SELECT * FROM " . self::TABLE;
+        $sql = "SELECT id, nome, email, perfil FROM " . self::TABLE;
         $query = $this->conexao->query($sql);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_CLASS, Usuario::class);

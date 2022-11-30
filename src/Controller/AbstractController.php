@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Security\UsuarioSecurity;
+
 abstract class AbstractController
 {
     public function renderizar(string $nomeDoArquivo, ?array $dados = null, bool $navbar = true) : void
@@ -21,5 +23,12 @@ abstract class AbstractController
     {
         header("Location:/{$onde}");
         exit();
+    }
+
+    public function checarLogin() 
+    {
+        if(!UsuarioSecurity::estaLogado()){
+            $this->redirecionar('login');
+        }
     }
 }

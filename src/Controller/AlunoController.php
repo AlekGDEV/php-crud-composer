@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Controller;
 
 use App\Model\Aluno;
+use App\Notification\WebNotification;
 use App\Repository\AlunoRepository;
 use App\Security\UsuarioSecurity;
 use Dompdf\Dompdf;
@@ -20,9 +21,9 @@ class AlunoController extends AbstractController
 
     public function listar() : void
     {
-        // if(!UsuarioSecurity::estaLogado()){
-        //     die('Precisa estar logado');
-        // }
+        if(!UsuarioSecurity::estaLogado()){
+            die('Precisa estar logado');
+        }
         $this->renderizar('aluno/listar', [
             'alunos' => $this->repository->buscarTodos()
         ]);
@@ -54,6 +55,7 @@ class AlunoController extends AbstractController
 
             die('Vish, aconteceu um erro');
         }
+        WebNotification::adicionar('Aluno cadastrado com sucesso', 'success');
         $this->redirecionar('alunos/listar');      
     }
 
@@ -80,6 +82,7 @@ class AlunoController extends AbstractController
     
                 die('Vish, aconteceu um erro');
             }
+            WebNotification::adicionar('Dados do aluno atualizado com sucesso', 'success');
             $this->redirecionar('alunos/listar');
         }
     }
@@ -88,7 +91,7 @@ class AlunoController extends AbstractController
     {
         $id = $_GET['id'];
         $this->repository->excluir($id);
-        
+        WebNotification::adicionar('Aluno removido com sucesso', 'success');
         $this->redirecionar('alunos/listar');
     }
     

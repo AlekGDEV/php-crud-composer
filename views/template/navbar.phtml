@@ -20,11 +20,17 @@
                 <li class="list-group-item rounded p-0"><a href="/categorias/listar" class="btn btn-outline-dark">Categorias</a></li>
             </ul>
         </div>
+        <ul class="m-auto list-group list-group-horizontal text-white">  
+            <li class="list-group-item rounded p-0"><a href="/usuarios/listar" class="btn btn-outline-dark">Usuários</a></li>
+        </ul>
     </div>
     <div class="w-100 d-flex justify-content-end gap-3">
-        <span class="fs-3 text-white mt-auto mb-auto">Bem vinde, <?php //echo App\Security\UsuarioSecurity::capturarUsuarioLogado()->nome;?></span>
+        <span class="fs-6 text-white mt-auto mb-auto">Bem vinde, <?php echo App\Security\UsuarioSecurity::capturarUsuarioLogado()->nome;?></span>
         <ul class="list-group">
             <li class="list-group-item me-2 rounded p-0"><a href="/desconectar" class="btn btn-outline-danger">Desconectar</a></li>
         </ul>
     </div>
 </nav>
+<div class="container-fluid">
+    <?php App\Notification\WebNotification::show(); ?>
+</div>

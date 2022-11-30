@@ -8,6 +8,8 @@ class SiteController extends AbstractController
 {
     public function inicio()
     {
+        $this->checarLogin();
+
         $this->renderizar('index');
     }
 }

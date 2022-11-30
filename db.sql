@@ -1,4 +1,4 @@
-CREATE DATABASE db_escola;
+CREATE DATABASE IF NOT EXISTS db_escola;
 
 USE db_escola;
 
@@ -23,6 +23,11 @@ CREATE TABLE tb_professores (
     horariosDisponiveis VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE tb_categorias (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE tb_cursos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -33,12 +38,6 @@ CREATE TABLE tb_cursos (
     FOREIGN KEY (categoria_id) REFERENCES tb_categorias(id)
 );
 
-CREATE TABLE tb_categorias (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL
-);
-
-
 CREATE TABLE tb_usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -46,5 +45,3 @@ CREATE TABLE tb_usuarios (
     senha VARCHAR(255) NOT NULL,
     perfil VARCHAR(100) NOT NULL
 );
-
-
